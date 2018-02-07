@@ -13,14 +13,21 @@ $(document).ready(function() {
  * upon receiving a response from Giphy, updates the DOM to display the new GIF
  */
 function fetchAndDisplayGif(event) {
-    
     // This prevents the form submission from doing what it normally does: send a request (which would cause our page to refresh).
     // Because we will be making our own AJAX request, we dont need to send a normal request and we definitely don't want the page to refresh.
     event.preventDefault();
     
+    // Validate user is not a robot
+    var anser = $( "[name='answer']" ).val();
+    if ( anser != "5" ) {
+        $( "#feedback" ).text("wrong");
+        setGifLoadedStatus(false);
+        return null;
+    }
+
     // get the user's input text from the DOM
     var searchQuery = $( "[name='tag']" ).val(); // DONE should be e.g. "dance"
-    
+
     // configure a few parameters to attach to our request
     var params = { 
         api_key: "dc6zaTOxFJmzC", 
