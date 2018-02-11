@@ -2,7 +2,7 @@
 
 $(document).ready(function() {
     // register our function as the "callback" to be triggered by the form's submission event
-    $("#form-gif-request").submit(fetchAndDisplayGif); // in other words, when the form is submitted, fetchAndDisplayGif() will be executed
+    $("#submit").on('click', fetchAndDisplayGif); // in other words, when the form is submitted, fetchAndDisplayGif() will be executed
 });
 
 
@@ -18,9 +18,10 @@ function fetchAndDisplayGif(event) {
     event.preventDefault();
     
     // Validate user is not a robot
-    var anser = $( "[name='answer']" ).val();
-    if ( anser != "5" ) {
-        $( "#feedback" ).text("wrong");
+    var answer = $( "[name='answer']" )
+    if ( answer.val() != "5" ) {
+        $( "#feedback" ).text("You must be a robot!").addClass('red-text');
+        answer.css('border-color', 'red');
         setGifLoadedStatus(false);
         return null;
     }
@@ -58,7 +59,8 @@ function fetchAndDisplayGif(event) {
     
     // DONE
     // give the user a "Loading..." message while they wait
-    $( "#feedback" ).text("Loading...");
+    answer.css('border-color', 'green');
+    $( "#feedback" ).text("Loading...").removeClass('red-text').addClass('green-text');
     setGifLoadedStatus(false);
 }
 
